@@ -1,0 +1,12 @@
+<h1>Hello <%= @user.username %></h1>
+<br><br>
+Here is a list of all of your tweets!
+<table>
+    <% @user.tweets.each do |tweet| %>
+        <tr>
+        <td>
+            <a href='/tweets/<%= tweet.id %>'><%= tweet.content %></a>
+        </td>
+        </tr>
+    <% end %>
+</table>

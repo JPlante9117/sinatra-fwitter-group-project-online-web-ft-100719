@@ -1,0 +1,12 @@
+<h1>Tweet <%= @tweet.id %></h1>
+<h2>by <%= @tweet.user.username %></h2>
+<p/>
+<p><%= @tweet.content %></p>
+<p/>
+
+<% if session.key?("user_id") %>
+    <% if session[:user_id] == @tweet.user.id %>
+        <a href='/tweets/<%= @tweet.id %>/edit'><input type='button' value="Edit Tweet"></a>
+        <a href='/tweets/<%= @tweet.id %>/delete'><input type='button' value="Delete Tweet"></a>
+    <% end %>
+<% end %>

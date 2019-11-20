@@ -1,0 +1,21 @@
+<h1>A List of All Tweets:</h1>
+<table>
+<tr>
+    <th>
+    Tweet
+    </th>
+    <th>
+    By User:
+    </th>
+</tr>
+<% @tweets.each do |tweet| %>
+    <tr>
+        <td>
+            <a href="/tweets/<%= tweet.id %>"><%= tweet.content %></a>
+        </td>
+        <td>
+            <%= tweet.user.username %>
+        </td>
+    </tr>
+<% end %>
+</table>

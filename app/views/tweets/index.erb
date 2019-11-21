@@ -1,3 +1,9 @@
+<% if flash[:message] %>
+    <br><br>
+    <font color="red"><%= flash[:message]%></font>
+    <br><br>
+<% end %>
+<p>Welcome, <%= @user.username %></p>
 <h1>A List of All Tweets:</h1>
 <table>
 <tr>

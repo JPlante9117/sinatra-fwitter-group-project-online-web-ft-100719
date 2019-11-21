@@ -1,12 +1,20 @@
+<% if flash[:message] %>
+    <br><br>
+    <font color="red"><%= flash[:message]%></font>
+    <br><br>
+<% end %>
+
 <h1>Tweet <%= @tweet.id %></h1>
 <h2>by <%= @tweet.user.username %></h2>
 <p/>
 <p><%= @tweet.content %></p>
 <p/>
 
-<% if session.key?("user_id") %>
-    <% if session[:user_id] == @tweet.user.id %>
+<% if logged_in? %>
+    
         <a href='/tweets/<%= @tweet.id %>/edit'><input type='button' value="Edit Tweet"></a>
-        <a href='/tweets/<%= @tweet.id %>/delete'><input type='button' value="Delete Tweet"></a>
-    <% end %>
+    <form action="/tweets/<%= @tweet.id %>/delete" method="POST">
+        <input type='hidden' id='hidden' name='_method' value='DELETE'>
+        <input type='submit' value='Delete Tweet'>
+    </form>
 <% end %>

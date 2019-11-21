@@ -1,0 +1,14 @@
+<% if logged_in? %>
+<%= @error %>
+  <form action='/tweets/<%= @tweet.id %>' method="post">
+    Content:<br>
+    <textarea type="text" name="content" style="word-wrap:break-word;"><%= @tweet.content %></textarea><br>
+    Edit Your Tweet:
+    <input type="hidden" id="hidden" name="_method" value="PATCH">
+    <input type="submit" name="submit">
+
+  </form>
+
+  <% else %>
+      <h1> You Must Be Logged in to the Same Account to Edit Tweets</h1>
+  <% end %>

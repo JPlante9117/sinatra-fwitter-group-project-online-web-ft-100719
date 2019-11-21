@@ -1,42 +1,60 @@
 class UsersController < ApplicationController
 
     get '/signup' do
-        #some stuff
-        erb :'/users/new'
+        if logged_in?
+            flash[:message] = "You're already logged in and don't need to sign up!"
+            redirect '/tweets'
+        else
+            erb :'/users/new'
+        end
     end
 
     post '/signup' do
-        user = User.new(username: params[:username], password: params[:password])
-        if user.save
-            redirect '/login'
-        else
+        
+        if params[:username] == "" || params[:password] == "" || params[:email] == ""
+            flash[:message] = "Please make sure each section is properly filled in"
             redirect '/signup'
+        else
+            @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
+            @user.save
+            session[:user_id] = @user.id
+            redirect to '/tweets'
         end
     end
 
     get '/login' do
-        #some stuff
-        erb :'/users/login'
+        if logged_in?
+            flash[:message] = "You are already logged in"
+            redirect '/tweets'
+        else
+            erb :'/users/login'
+        end
     end
 
     post '/login' do
         user = User.find_by(username: params[:username])
         if user && user.authenticate(params[:password])
             session[:user_id] = user.id
-            redirect '/'
+            redirect '/tweets'
         else
-            redirect '/login'
+            flash[:message] = "Couldn't find an account with that information! Sign up today!"
+            redirect '/signup'
         end
     end
 
     get '/logout' do
-        session.clear
-        redirect '/login'
+        if logged_in?
+            session.clear
+            flash[:message] = "You have logged out"
+            redirect '/login'
+        else
+            redirect '/'
+        end
     end
 
     get '/users/:slug' do
         @user = User.find_by_slug(params[:slug])
-        erb :'/user/show'
+        erb :'/users/show'
     end
 
 end
